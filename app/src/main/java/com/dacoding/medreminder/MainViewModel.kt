@@ -12,13 +12,15 @@ class MainViewModel : ViewModel() {
     fun onEvent(event: MainEvent) {
         when (event) {
             is MainEvent.Confirm -> {
-                state = state.copy(
+                state = MainState(
                     name = event.name,
                     dosage = event.dosage,
                     date = event.date,
                     time = event.time
                 )
             }
+
         }
     }
 }
+

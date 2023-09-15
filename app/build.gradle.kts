@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.dacoding.medreminder"
         minSdk = 26
+        //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -51,7 +52,9 @@ android {
 
 dependencies {
 
+    //noinspection GradleDependency
     implementation("androidx.core:core-ktx:1.9.0")
+    //noinspection GradleDependency
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))

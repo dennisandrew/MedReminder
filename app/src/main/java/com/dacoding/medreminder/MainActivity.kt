@@ -40,6 +40,7 @@ import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,12 +84,6 @@ class MainActivity : ComponentActivity() {
                     } else {
                         mutableStateOf(true)
                     }
-                    mutableStateOf(
-                        ContextCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.WAKE_LOCK
-                        ) == PackageManager.PERMISSION_GRANTED
-                    )
                 }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -156,7 +151,6 @@ class MainActivity : ComponentActivity() {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                             }
-                            permissionLauncher.launch(Manifest.permission.WAKE_LOCK)
 
                             if (hasNotificationPermission) {
                                 viewModel.onEvent(

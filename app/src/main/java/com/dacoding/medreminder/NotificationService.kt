@@ -2,7 +2,6 @@ package com.dacoding.medreminder
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -16,11 +15,15 @@ class NotificationService(
 
     @SuppressLint("ScheduleExactAlarm")
     fun scheduleNotification() {
-        val intent = Intent(context, Notification::class.java)
+        val notificationID = System.currentTimeMillis().toInt()
+        val intent = Intent(context, NotificationReceiver::class.java)
+        intent.putExtra("notificationID", notificationID)
+        intent.putExtra("dosage", viewModel.state.dosage)
+        intent.putExtra("name", viewModel.state.name)
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            NOTIFICATION_ID,
+            notificationID,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -56,6 +59,5 @@ class NotificationService(
 
     companion object {
         const val MAIN_CHANNEL_ID = "channel_main"
-        const val NOTIFICATION_ID = 1
     }
 }
