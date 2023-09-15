@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -95,77 +96,95 @@ class MainActivity : ComponentActivity() {
                             hasNotificationPermission = isGranted
                         }
                     )
-                    Column(
+                    LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        var nameState by remember { mutableStateOf("") }
-                        var dosageState by remember { mutableStateOf("") }
+                        item {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                var nameState by remember { mutableStateOf("") }
+                                var dosageState by remember { mutableStateOf("") }
 
-                        TextField(
-                            value = nameState,
-                            onValueChange = {
-                                nameState = it
-                            },
-                            label = { Text(text = "Enter the name of the medication") },
-                            placeholder = { Text(text = "Name") }
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        TextField(
-                            value = dosageState,
-                            onValueChange = {
-                                dosageState = it
-                            },
-                            label = { Text(text = "Enter the dosage") },
-                            placeholder = { Text(text = "Dosage") },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.NumberPassword
-                            )
-
-
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(onClick = { dateDialogState.show() }) {
-                            Text(text = "Select a date")
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = pickedDate.toString())
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(onClick = { timeDialogState.show() }) {
-                            Text(text = "Select a time")
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = pickedTime.toString())
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(onClick = {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                permissionLauncher.launch(Manifest.permission.SCHEDULE_EXACT_ALARM)
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            }
-
-                            if (hasNotificationPermission) {
-                                viewModel.onEvent(
-                                    MainEvent.Confirm(
-                                        name = nameState,
-                                        dosage = dosageState.toInt(),
-                                        date = pickedDate,
-                                        time = pickedTime
-                                    )
+                                TextField(
+                                    value = nameState,
+                                    onValueChange = {
+                                        nameState = it
+                                    },
+                                    label = { Text(text = "Enter the name of the medication") },
+                                    placeholder = { Text(text = "Name") }
                                 )
-                                service.scheduleNotification()
-                                Toast.makeText(context, "Confirmed", Toast.LENGTH_SHORT).show()
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                TextField(
+                                    value = dosageState,
+                                    onValueChange = {
+                                        dosageState = it
+                                    },
+                                    label = { Text(text = "Enter the dosage") },
+                                    placeholder = { Text(text = "Dosage") },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.NumberPassword
+                                    )
+
+
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Button(onClick = { dateDialogState.show() }) {
+                                    Text(text = "Select a date")
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(text = pickedDate.toString())
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Button(onClick = { timeDialogState.show() }) {
+                                    Text(text = "Select a time")
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(text = pickedTime.toString())
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Button(onClick = {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                        permissionLauncher.launch(
+                                            Manifest.permission
+                                                .SCHEDULE_EXACT_ALARM
+                                        )
+                                    }
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES
+                                            .TIRAMISU
+                                    ) {
+                                        permissionLauncher.launch(
+                                            Manifest.permission
+                                                .POST_NOTIFICATIONS
+                                        )
+                                    }
+
+                                    if (hasNotificationPermission) {
+                                        viewModel.onEvent(
+                                            MainEvent.Confirm(
+                                                name = nameState,
+                                                dosage = dosageState.toInt(),
+                                                date = pickedDate,
+                                                time = pickedTime
+                                            )
+                                        )
+                                        service.scheduleNotification()
+                                        Toast.makeText(
+                                            context, "Confirmed", Toast
+                                                .LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }) {
+                                    Text(text = "Confirm")
+                                }
                             }
-                        }) {
-                            Text(text = "Confirm")
                         }
                     }
                 }
