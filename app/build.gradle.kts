@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.dacoding.medreminder"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -66,4 +66,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
 }

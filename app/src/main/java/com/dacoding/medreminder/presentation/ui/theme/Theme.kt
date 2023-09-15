@@ -1,4 +1,4 @@
-package com.dacoding.medreminder.ui.theme
+package com.dacoding.medreminder.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

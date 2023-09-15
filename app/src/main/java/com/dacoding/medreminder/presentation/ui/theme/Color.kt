@@ -1,4 +1,4 @@
-package com.dacoding.medreminder.ui.theme
+package com.dacoding.medreminder.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
