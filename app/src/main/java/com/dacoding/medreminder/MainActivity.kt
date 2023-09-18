@@ -41,8 +41,6 @@ import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
@@ -117,7 +115,8 @@ class MainActivity : ComponentActivity() {
                                         nameState = it
                                     },
                                     label = { Text(text = "Enter the name of the medication") },
-                                    placeholder = { Text(text = "Name") }
+                                    placeholder = { Text(text = "Name") },
+                                    maxLines = 1
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -130,9 +129,8 @@ class MainActivity : ComponentActivity() {
                                     placeholder = { Text(text = "Dosage") },
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.NumberPassword
-                                    )
-
-
+                                    ),
+                                    maxLines = 1
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
 
